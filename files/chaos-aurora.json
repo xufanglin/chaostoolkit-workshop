@@ -1,0 +1,56 @@
+{
+    "title": "Failover Aurora cluster",
+    "description": "Verify that the Aurora cluster failover does not affect the application",
+    "configuration": {
+        "aws_region": "us-east-1"
+    },
+    "steady-state-hypothesis": {
+        "title": "The cluster status is available and web API is health",
+        "probes": [
+            {
+                "name": "aurora-cluster-status",
+                "type": "probe",
+                "tolerance": ["available"],
+                "provider": {
+                    "type": "python",
+                    "module": "chaosaws.rds.probes",
+                    "func": "cluster_status",
+                    "arguments": {
+                        "cluster_id": "main-aurora-cluster"
+                    }
+                },
+                "pauses": {
+                    "after": 15
+                }
+            }
+        ]
+    },
+    "method": [
+        {
+            "name": "failover-db-cluster",
+            "type": "action",
+            "provider": {
+                "type": "python",
+                "module": "chaosaws.rds.actions",
+                "func": "failover_db_cluster",
+                "arguments": {
+                    "db_cluster_identifier": "main-aurora-cluster",
+                    "target_db_instance_identifier": "lab-us-east-1-rdsdbinstance2-incbdzctdowb"
+                }
+            },
+            "pauses": {
+                "after": 15
+            }
+        },
+        {            
+            "ref": "aurora-cluster-status"
+        },
+        {            
+            "ref": "aurora-cluster-status"
+        },
+        {            
+            "ref": "aurora-cluster-status"
+        }
+    ],
+    "rollbacks":[]
+}
