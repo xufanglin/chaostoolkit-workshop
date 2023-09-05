@@ -12,13 +12,13 @@
 
 ![01](files/01.png)
 
-1. 获取完Key文件后，打开本地的终端命令行，修改key文件的读写权限为400：
+2. 获取完Key文件后，打开本地的终端命令行，修改key文件的读写权限为400：
 
 ```bash
 chmod 0400 ws-default-keypair.pem
 ```
 
-1. 点击“Open AWS Console"获取主机名，用于SSH登录。
+3. 点击“Open AWS Console"获取主机名，用于SSH登录。
 
 ![02](files/02.png)
 
@@ -34,11 +34,11 @@ EC2_PUBDNS=$(aws ec2 describe-instances --query 'Reservations[0].Instances[0].Pu
 ec2-54-210-188-68.compute-1.amazonaws.com
 ```
 
-1. 要登录EC2实验机器，还需要设置安全组，放行MyIP的SSH访问
+4. 要登录EC2实验机器，还需要设置安全组，放行MyIP的SSH访问
 
 ![04](files/04.png)
 
-1. 通过ssh命令登录到ec2实例
+5. 通过ssh命令登录到ec2实例
 
 ```bash
 ssh -i ws-default-keypair.pem ec2-user@ec2-54-210-188-68.compute-1.amazonaws.com
@@ -50,7 +50,7 @@ ssh -i ws-default-keypair.pem ec2-user@ec2-54-210-188-68.compute-1.amazonaws.com
 ssh -i ws-default-keypair.pem ec2-user@$EC2_PUBDNS
 ```
 
-1. 在EC2中安装chaostoolkit-aws工具，注意chaostoolkit和chaostoolkit-aws都是安装在python的venv里，需要执行source命令加载环境，否则无法执行。
+6. 在EC2中安装chaostoolkit-aws工具，注意chaostoolkit和chaostoolkit-aws都是安装在python的venv里，需要执行source命令加载环境，否则无法执行。
 
 ```bash
 python3 -m venv .chaostk
@@ -59,7 +59,7 @@ pip install -U chaostoolkit
 pip install -U chaostoolkit-aws
 ```
 
-1. 通过命令获取Loadbalancer的DNS，用于检查注入时状态是否正常：
+7. 通过命令获取Loadbalancer的DNS，用于检查注入时状态是否正常：
 
 ```bash
 LB_DNSNAME=$(aws elbv2 describe-load-balancers --query 'LoadBalancers[0].DNSName' --output text) && echo $LB_DNSNAME
