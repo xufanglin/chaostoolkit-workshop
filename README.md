@@ -81,7 +81,7 @@ wordpress-load-balancer-285028187.us-east-1.elb.amazonaws.com
 
 ![05](files/05.png)
 
-创建实验的配置文件
+创建实验的配置文件，或下载[chaos-aurora.json](files/chaos-aurora.json)，根据自己环境进行修改。
 
 ```bash
 vi chaos-aurora.json
