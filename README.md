@@ -162,3 +162,9 @@ chaos run chaos-aurora.json
 实验将会在当前目录下生成log和journal文件，可以通过这些文件，查看chaostoolkit执行实验的过程，以及目标集群的状态信息。可以看到集群在某个时间点状态为“available”，在进行failover。
 
 除了集群本身的状态，往往我们还要验证web服务是否受影响，在一个在线的web系统里，通过观测系统就可以观察web状态，这里通过在web浏览器里查看暴露在ELB上的web服务，并使用`command+shift+r` （windows快捷键不同）强制刷新，可以看到中间某个时间点，会出现503，failover过程中，大部分时间里，并不会对web有影响。ELB的URL查看`echo $LB_DNSNAME`环境变量。
+
+## 如何扩展chaostoolkit支持更多的AWS服务
+
+chaostoolkit是个实验平台，虽然chaostoolkit-aws提供了AWS常用服务的故障注入和状态探测的功能，但在实验中，action和probe往往比以上的场景要复杂的多，甚至还有一些服务是当前还不支持的，我们可以使用python3代码，对chaostoolkit做扩展。这里也为大家提供了一个简单的例子，演示如何扩展chaostoolkit的实验。
+
+[如何扩展chaostoolkit支持更多的AWS服务](./howto-extend-chaostoolkit-aws.md)
