@@ -41,6 +41,12 @@ ec2-54-210-188-68.compute-1.amazonaws.com
 
 ![04](files/04.png)
 
+有些情况下，安全组的MyIP匹配并不是很准，可能导致设置完无法SSH访问的情况，也可以使用以下的方式获取自己的IP：
+
+```bash
+curl -s http://whatismyip.akamai.com/
+```
+
 5. 通过ssh命令登录到ec2实例
 
 ```bash
@@ -51,12 +57,6 @@ ssh -i ws-default-keypair.pem ec2-user@ec2-54-210-188-68.compute-1.amazonaws.com
 
 ```bash
 ssh -i ws-default-keypair.pem ec2-user@$EC2_PUBDNS
-```
-
-有些情况下，安全组的MyIP匹配并不是很准，可能导致设置完无法SSH访问的情况，也可以使用以下的方式获取自己的IP：
-
-```bash
-curl -s http://whatismyip.akamai.com/
 ```
 
 6. 在EC2中安装chaostoolkit-aws工具，注意chaostoolkit和chaostoolkit-aws都是安装在python的venv里，需要执行source命令加载环境，否则无法执行。
