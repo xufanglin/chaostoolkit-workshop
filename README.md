@@ -169,7 +169,7 @@ chaos run chaos-aurora.json
 
 除了集群本身的状态，往往我们还要验证web服务是否受影响，在一个在线的web系统里，通过观测系统就可以观察web状态，这里通过在web浏览器里查看暴露在ELB上的web服务，并使用`command+shift+r` （windows快捷键不同）强制刷新，可以看到中间某个时间点，会出现503，failover过程中，大部分时间里，并不会对web有影响。ELB的URL查看`echo $LB_DNSNAME`环境变量。
 
-由于workshop默认在北美，可是直接在ec2里使用以下命令检查站点状态：
+由于workshop默认在北美，可以直接在ec2里使用以下脚本检查站点状态：
 
 ```bash
 #!/bin/bash
