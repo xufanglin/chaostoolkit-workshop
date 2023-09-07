@@ -172,7 +172,10 @@ chaos run chaos-aurora.json
 由于workshop默认在北美，可是直接在ec2里使用以下命令检查站点状态：
 
 ```bash
-curl -sIL -w "%{http_code}" -o /dev/null $LB_DNSNAME
+while true
+do
+      curl -sIL -w "%{http_code}" -o /dev/null $LB_DNSNAME && echo -e "\t" && sleep 5
+done
 ```
 
 ## 如何扩展chaostoolkit支持更多的AWS服务
