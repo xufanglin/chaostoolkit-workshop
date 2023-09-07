@@ -172,6 +172,9 @@ chaos run chaos-aurora.json
 由于workshop默认在北美，可是直接在ec2里使用以下命令检查站点状态：
 
 ```bash
+#!/bin/bash
+LB_DNSNAME=$(aws elbv2 describe-load-balancers --query 'LoadBalancers[0].DNSName' --output text)
+
 while true
 do
       curl -sIL -w "%{http_code}" -o /dev/null $LB_DNSNAME && echo -e "\t" && sleep 5
