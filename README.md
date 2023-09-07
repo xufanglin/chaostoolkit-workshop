@@ -53,6 +53,12 @@ ssh -i ws-default-keypair.pem ec2-user@ec2-54-210-188-68.compute-1.amazonaws.com
 ssh -i ws-default-keypair.pem ec2-user@$EC2_PUBDNS
 ```
 
+有些情况下，安全组的MyIP匹配并不是很准，可能导致设置完无法SSH访问的情况，也可以使用以下的方式获取自己的IP：
+
+```bash
+curl -s http://whatismyip.akamai.com/
+```
+
 6. 在EC2中安装chaostoolkit-aws工具，注意chaostoolkit和chaostoolkit-aws都是安装在python的venv里，需要执行source命令加载环境，否则无法执行。
 
 ```bash
@@ -162,6 +168,12 @@ chaos run chaos-aurora.json
 实验将会在当前目录下生成log和journal文件，可以通过这些文件，查看chaostoolkit执行实验的过程，以及目标集群的状态信息。可以看到集群在某个时间点状态为“available”，在进行failover。
 
 除了集群本身的状态，往往我们还要验证web服务是否受影响，在一个在线的web系统里，通过观测系统就可以观察web状态，这里通过在web浏览器里查看暴露在ELB上的web服务，并使用`command+shift+r` （windows快捷键不同）强制刷新，可以看到中间某个时间点，会出现503，failover过程中，大部分时间里，并不会对web有影响。ELB的URL查看`echo $LB_DNSNAME`环境变量。
+
+由于workshop默认在北美，可是直接在ec2里使用以下命令检查站点状态：
+
+```bash
+curl -sIL -w "%{http_code}" -o /dev/null $LB_DNSNAME
+```
 
 ## 如何扩展chaostoolkit支持更多的AWS服务
 
